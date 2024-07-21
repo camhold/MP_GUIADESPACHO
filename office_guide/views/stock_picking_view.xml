@@ -16,9 +16,9 @@
                         <group>
                             <field name="destination_partner_id"/>
                             <field name="patente" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}"/>
-                            <field name="direccion" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}" placeholder="Tucapel 2827 Valle Paicavi"/>
-                            <field name="comuna" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}" placeholder="Concepción"/>
-                            <field name="ciudad" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}" placeholder="Concepción"/>
+                            <field name="direccion" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}" text="Tucapel 2827 Valle Paicavi"/>
+                            <field name="comuna" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}" text="Concepción"/>
+                            <field name="ciudad" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}" text="Concepción"/>
                             <field name="amount_total" invisible="1"/>
                             <field name="dte_received_correctly"/>
                         </group>
