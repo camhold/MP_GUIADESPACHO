@@ -64,6 +64,16 @@ class StockPicking(models.Model):
             self.get_token(company)
         return company.office_guide_token
 
+    def write(self, vals):
+        for record in self:
+            if 'direccion' in vals and vals['direccion'] == 'Tucapel 2827 Valle Paicavi':
+                vals.pop('direccion')
+            if 'comuna' in vals and vals['comuna'] == 'Concepción':
+                vals.pop('comuna')
+            if 'ciudad' in vals and vals['ciudad'] == 'Concepción':
+                vals.pop('ciudad')
+        return super(StockPicking, self).write(vals)
+
     def get_register_single_dte(self):
         if self.dte_received_correctly:
             raise ValidationError(_('Guía de despacho ya registrada.'))
@@ -107,30 +117,10 @@ class StockPicking(models.Model):
                 "MontoItem": 0,
                 "DscItem": det.product_id.name
             })
-        if not self.env.company.partner_id.vat:
-            raise ValidationError(_('Debe ingresar un RUT del emisor.'))
-        if not self.env.company.partner_id.document_number:
-            raise ValidationError(_('Debe ingresar un RUT del receptor.'))
-        if not self.env.company.partner_id.activity_description.name:
-            raise ValidationError(_('Debe ingresar la glosa descriptiva del receptor.'))
-        if not self.env.company.partner_id.name:
-            raise ValidationError(_('Debe ingresar una razón social del receptor.'))
-        if not self.env.company.partner_id.street:
-            raise ValidationError(_('Debe ingresar una dirección del receptor.'))
-        if not self.env.company.partner_id.city_id.name:
-            raise ValidationError(_('Debe ingresar una comuna del receptor.'))
-        if not self.env.company.partner_id.city:
-            raise ValidationError(_('Debe ingresar una ciudad del receptor.'))
-        if not self.env.company.partner_id.phone:
-            raise ValidationError(_('Debe ingresar el celular del receptor.'))
+        if not self.destination_partner_id:
+            raise ValidationError(_('Debe ingresar un Responsable.'))
         if not self.destination_partner_id.document_number:
-            raise ValidationError(_('Debe ingresar un RUT del transportista.'))
-        if not self.destination_partner_id.street:
-            raise ValidationError(_('Debe ingresar una dirección del transportista.'))
-        if not self.destination_partner_id.city_id.name:
-            raise ValidationError(_('Debe ingresar una comuna del transportista.'))
-        if not self.destination_partner_id.city:
-            raise ValidationError(_('Debe ingresar una ciudad del transportista.'))
+            raise ValidationError(_('Debe ingresar RUT del Responsable.'))
         json_dte = {
             "RUTEmisor": self.env.company.partner_id.vat.replace('.', ''),
             "TipoDTE": 52,
@@ -148,10 +138,12 @@ class StockPicking(models.Model):
                     "FchEmis": today,
                     "FchVenc": today,
                     "IndTraslado": 5,
-                    "RUTTrans": self.destination_partner_id.document_number.replace('.', ''),
-                    "DirDest": self.destination_partner_id.street,
-                    "CmnaDest": self.destination_partner_id.city_id.name,
-                    "CiudadDest": self.destination_partner_id.city,
+                    "RUTChofer": self.destination_partner_id.document_number.replace('.', ''),
+                    "NombreChofer": self.destination_partner_id.partner_id.name,
+                    "Patente": self.patente,
+                    "DirDest": self.direccion,
+                    "CmnaDest": self.comuna,
+                    "CiudadDest": self.ciudad,
                     "MntTotal": 0,
                     "Detalle": detalle,
                 }
