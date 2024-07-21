@@ -16,7 +16,7 @@ class StockPicking(models.Model):
     _description = 'Stock Picking'
 
     dte_received_correctly = fields.Boolean(string='DTE recepcion', readonly=True, default=False, copy=False)
-    destination_partner_id = fields.Many2one('res.partner', string='Transportista')
+    destination_partner_id = fields.Many2one('res.partner', string='Responsable')
     amount_total = fields.Float(string='Total Amount', default=0.0)
     url_pdf = fields.Char(string='URL PDF', readonly=True, copy=False)
     binary_pdf = fields.Binary(string='Binary PDF', readonly=True, copy=False)
@@ -24,9 +24,10 @@ class StockPicking(models.Model):
     json_dte = fields.Text(string='JSON DTE', readonly=True, copy=False)
     folio = fields.Integer(string='Folio', readonly=True, copy=False)
     patente = fields.Char(string='Patente', readonly=True, copy=False)
-    direccion = fields.Char(string='Dirección', readonly=False, copy=False)
-    comuna = fields.Char(string='Comuna', readonly=False, copy=False)
-    ciudad = fields.Char(string='Ciudad', readonly=False, copy=False)
+    direccion = fields.Char(string='Dirección', readonly=True, copy=False, default='Tucapel 2827 Valle Paicavi')
+    comuna = fields.Char(string='Comuna', readonly=True, copy=False, default='Concepción')
+    ciudad = fields.Char(string='Ciudad', readonly=True, copy=False, default='Concepción')
+
 
     def get_token(self, company):
         try:
