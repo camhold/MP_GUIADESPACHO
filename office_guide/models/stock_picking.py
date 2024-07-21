@@ -23,6 +23,10 @@ class StockPicking(models.Model):
     filename_pdf = fields.Char(string='Filename PDF', readonly=True, copy=False)
     json_dte = fields.Text(string='JSON DTE', readonly=True, copy=False)
     folio = fields.Integer(string='Folio', readonly=True, copy=False)
+    patente = fields.Char(string='Patente', readonly=True, copy=False)
+    direccion = fields.Char(string='Dirección', readonly=True, copy=False)
+    comuna = fields.Char(string='Comuna', readonly=True, copy=False)
+    ciudad = fields.Char(string='Ciudad', readonly=True, copy=False)
 
     def get_token(self, company):
         try:
