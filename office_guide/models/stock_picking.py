@@ -139,7 +139,7 @@ class StockPicking(models.Model):
                     "FchVenc": today,
                     "IndTraslado": 5,
                     "RUTChofer": self.destination_partner_id.document_number.replace('.', ''),
-                    "NombreChofer": self.destination_partner_id.partner_id.name,
+                    "NombreChofer": self.destination_partner_id.name,
                     "Patente": self.patente,
                     "DirDest": self.direccion,
                     "CmnaDest": self.comuna,
