@@ -119,8 +119,14 @@ class StockPicking(models.Model):
             })
         #if not self.destination_partner_id:
         #    raise ValidationError(_('Debe ingresar un Responsable.'))
-        if not self.destination_partner_id.document_number:
-            raise ValidationError(_('Debe ingresar RUT del Responsable.'))
+
+        #if not self.destination_partner_id.document_number:
+        #    raise ValidationError(_('Debe ingresar RUT del Responsable.'))
+
+        if self.destination_partner_id:
+            if not self.destination_partner_id.document_number:
+                raise ValidationError(_('Debe ingresar RUT del Responsable.'))
+
         json_dte = {
             "RUTEmisor": self.env.company.partner_id.vat.replace('.', ''),
             "TipoDTE": 52,
@@ -138,8 +144,8 @@ class StockPicking(models.Model):
                     "FchEmis": today,
                     "FchVenc": today,
                     "IndTraslado": 5,
-                    "RUTChofer": self.destination_partner_id.document_number.replace('.', ''),
-                    "NombreChofer": self.destination_partner_id.name,
+                    "RUTChofer": self.destination_partner_id.document_number.replace('.', '') if self.destination_partner_id else '',
+                    "NombreChofer": self.destination_partner_id.name if self.destination_partner_id else '',
                     "Patente": self.patente,
                     "DirDest": self.direccion,
                     "CmnaDest": self.comuna,
