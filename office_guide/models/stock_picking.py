@@ -78,7 +78,7 @@ class StockPicking(models.Model):
         if self.dte_received_correctly:
             raise ValidationError(_('Guía de despacho ya registrada.'))
         if not self.destination_partner_id:
-            raise ValidationError(_('Debe ingresar un contacto del destino.'))
+            raise ValidationError(_('Debe ingresar un Responsable.'))
         company = self.env.user.company_id
         url = f'{company.office_guide_base_url}/api/facturacion/registrarDTE'
         token = self.get_daily_token()
