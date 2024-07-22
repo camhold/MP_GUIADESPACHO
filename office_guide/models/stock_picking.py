@@ -117,8 +117,8 @@ class StockPicking(models.Model):
                 "MontoItem": 0,
                 "DscItem": det.product_id.name
             })
-        if not self.destination_partner_id:
-            raise ValidationError(_('Debe ingresar un Responsable.'))
+        #if not self.destination_partner_id:
+        #    raise ValidationError(_('Debe ingresar un Responsable.'))
         if not self.destination_partner_id.document_number:
             raise ValidationError(_('Debe ingresar RUT del Responsable.'))
         json_dte = {
