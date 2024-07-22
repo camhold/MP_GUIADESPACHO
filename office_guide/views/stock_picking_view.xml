@@ -14,7 +14,7 @@
                 <page name="guia_despacho" string="Guía de despacho">
                     <group>
                         <group>
-                            <field name="destination_partner_id"/>
+                            <field name="destination_partner_id" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}"/>
                             <field name="patente" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}"/>
                             <field name="direccion" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}"/>
                             <field name="comuna" attrs="{'invisible': ['|', ('state', '!=', 'done'), ('dte_received_correctly', '=', True)]}"/>
